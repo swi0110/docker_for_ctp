@@ -82,6 +82,6 @@ WORKDIR /home/ha_repl_01
 
 RUN git clone https://github.com/CUBRID/cubrid-testtools
 RUN cp -rf cubrid-testtools/CTP ./
-
+ 
 USER ctp
 WORKDIR /home/ctp
