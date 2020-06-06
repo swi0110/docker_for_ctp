@@ -40,7 +40,6 @@ CMD chgrp -R ctp ctp_config
 
 # ha_repl
 COPY ctp_config /home/ha_repl_01/ctp_config
-
 CMD chown -R ha_repl_01 /home/ha_repl_01/ctp_config
 CMD chgrp -R ha_repl_01 /home/ha_repl_01/ctp_config
 
@@ -82,7 +81,7 @@ USER ha_repl_01
 WORKDIR /home/ha_repl_01
 
 RUN git clone https://github.com/CUBRID/cubrid-testtools
-#RUN cp -rf cubrid-testtools/CTP ./
-CMD ["cp","-rf","cubrid-testtools/CTP","./"]
+RUN cp -rf cubrid-testtools/CTP ./
 
 USER ctp
+WORKDIR /home/ctp

@@ -1,5 +1,5 @@
 # !/bin/bash
-buildFile=`ls CUBRID_engine`
+buildFile=`ls CUBRID_engine | grep "\.sh"`
 echo "$buildFile"
 mkdir -p ${HOME}/CUBRID
 
