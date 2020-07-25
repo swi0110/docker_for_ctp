@@ -20,7 +20,14 @@ sleep 10;
 
 docker network create --driver bridge br1 --ip-range=172.200.1.0/24 --subnet=172.200.1.0/24
 
-# docker run -dit --net br1 --ip 172.200.1.2 -v /root/docker_for_ctp/ctp_config:/home/ctp/ctp_config --name docker_for_ctp --hostname docker_for_ctp_01 ctp_container:0.1 /sbin/init
-docker run -dit --net br1 --ip 172.200.1.2 -v ${dir}/ctp_config:/home/ctp/ctp_config --name ${CONTAINER_NAME}_01 --hostname ${CONTAINER_NAME}_01 ${IMAGE_NAME}:${VERSION} /sbin/init
+#centos 7
+# docker run --privileged -dit --net br1 --ip 172.200.1.2 -v /root/docker_for_ctp/ctp_config:/home/ctp/ctp_config --name docker_for_ctp --hostname docker_for_ctp_01 ctp_container:0.1 /sbin/init
+#docker run --privileged -dit --net br1 --ip 172.200.1.2 -v ${dir}/ctp_config:/home/ctp/ctp_config --name ${CONTAINER_NAME}_01 --hostname ${CONTAINER_NAME}_01 ${IMAGE_NAME}:${VERSION} /sbin/init
 
-docker run -dit --net br1 --ip 172.200.1.3 -v ${dir}/ctp_config:/home/ctp/ctp_config --name ${CONTAINER_NAME}_02 --hostname ${CONTAINER_NAME}_02 ${IMAGE_NAME}:${VERSION} /sbin/init
+#docker run --privileged -dit --net br1 --ip 172.200.1.3 -v ${dir}/ctp_config:/home/ctp/ctp_config --name ${CONTAINER_NAME}_02 --hostname ${CONTAINER_NAME}_02 ${IMAGE_NAME}:${VERSION} /sbin/init
+
+#centos 6
+docker run --privileged -dit --net br1 --ip 172.200.1.2 -v ${dir}/ctp_config:/home/ctp/ctp_config --name ${CONTAINER_NAME}_01 --hostname ${CONTAINER_NAME}_01 ${IMAGE_NAME}:${VERSION} /bin/bash
+
+docker run --privileged -dit --net br1 --ip 172.200.1.3 -v ${dir}/ctp_config:/home/ctp/ctp_config --name ${CONTAINER_NAME}_02 --hostname ${CONTAINER_NAME}_02 ${IMAGE_NAME}:${VERSION} /bin/bash
+

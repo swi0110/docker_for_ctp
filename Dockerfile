@@ -1,5 +1,5 @@
-FROM centos:centos7.5.1804
-#FROM centos:centos6.9
+#FROM centos:centos7.5.1804
+FROM centos:centos6.9
 
 # It is not important
 #RUN yum update -y
@@ -7,8 +7,9 @@ RUN yum install -y openssh-server openssh-clients vim
 
 RUN     ssh-keygen -q -b 4096 -N '' -t rsa -f /etc/ssh/ssh_host_rsa_key && \
         ssh-keygen -q -b 1024 -N '' -t dsa -f /etc/ssh/ssh_host_dsa_key && \
-        ssh-keygen -q -b 521 -N '' -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key && \
-		ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ''
+        ssh-keygen -q -b 521 -N '' -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key
+#&& \
+#		ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ''
 
 RUN echo /usr/sbin/sshd >> /root/.bashrc && source /root/.bashrc
 
@@ -19,7 +20,7 @@ RUN     sed -i \
 EXPOSE 22
 
 # Necessary package
-RUN yum install -y net-tools
+RUN yum install -y net-tools sudo
 RUN yum install -y git wget tar java-1.6.0-openjdk.x86_64 java-1.6.0-openjdk-devel.x86_64
 RUN yum install -y gcc-4.4.7 gcc-c++ libtool-2.2.6
 
