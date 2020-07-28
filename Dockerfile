@@ -57,8 +57,8 @@ RUN cp -rf cubrid-testtools/CTP ./
 
 WORKDIR /home/ctp/ctp_config
 
+# Set the ctp env
 #CMD ./ctp_env_export.sh
-
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.41.x86_64" >> ${HOME}/.bash_profile
 RUN echo "export CTP_HOME=/home/ctp/CTP" >> ${HOME}/.bash_profile
 #RUN echo ". ${HOME}/.cubrid.sh" >> ${HOME}/.bash_profile
@@ -70,21 +70,14 @@ RUN sed -i 's@:$HOME/bin@:$HOME/bin:$HOME/CTP/bin:$HOME/CTP/common/script@' ${HO
 #CMD /bin/sh -c ctp_env_export.sh
 #CMD /bin/sh -c install_CUBRID.sh
 
-#RUN cp -f sql.conf /home/ctp/CTP/conf
 
-#COPY /home/ctp/ctp_config/sql.conf /home/ctp/CTP/conf
-#CMD ["cp","-f","sql.conf","/home/ctp/CTP/conf"]
-#RUN cp -f /home/ctp/ctp_config/sql.conf /home/ctp/CTP/conf
+# copy to ctp config
 ADD ctp_config/sql.conf /home/ctp/CTP/conf/
+ADD ctp_config/medium.conf /home/ctp/CTP/conf/
+ADD ctp_config/ha_repl.conf /home/ctp/CTP/conf/
 
 
-#RUN /bin/sh -c sh ctp_env_export.sh
 #RUN /bin/sh -c sh install_CUBRID.sh
-
-#RUN echo "export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.41.x86_64/jre" >> /home/ctp/.bash_profile
-#RUN echo "export CTP_HOME=/home/ctp/CTP" >> /home/ctp/.bash_profile
-#RUN sed -i 's@:$HOME/bin@:$HOME/bin:$HOME/CTP/bin:$HOME/CTP/common/script@' /home/ctp/.bash_profile
-#RUN . /home/ctp/.bash_profile
 
 #ENTRYPOINT ctp_entrypoint.sh
 
@@ -98,12 +91,8 @@ RUN cp -rf cubrid-testtools/CTP ./
 
 WORKDIR /home/ha_repl_01/ctp_config
 
-#SHELL ./ctp_env_export.sh
+# set the ctp env
 #CMD ./ctp_env_export.sh
-#ENV PATH=$PATH:/home/ctp/bin:/home/ctp/CTP/bin:/home/ctp/CTP/common/script
-#ENV JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.41.x86_64
-#ENV CTP_HOME=/home/ctp/CTP
-
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.41.x86_64" >> ${HOME}/.bash_profile
 RUN echo "export CTP_HOME=/home/ctp/CTP" >> ${HOME}/.bash_profile
 #RUN echo ". ${HOME}/.cubrid.sh" >> ${HOME}/.bash_profile
@@ -112,4 +101,3 @@ RUN sed -i 's@:$HOME/bin@:$HOME/bin:$HOME/CTP/bin:$HOME/CTP/common/script@' ${HO
  
 USER root
 
-#ENTRYPOINT /bin/bash
