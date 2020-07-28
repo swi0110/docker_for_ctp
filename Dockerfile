@@ -17,6 +17,7 @@ RUN     sed -i \
         -e 's~^#PermitRootLogin yes~PermitRootLogin yes~g' \
         /etc/ssh/sshd_config
 
+CMD service sshd restart
 EXPOSE 22
 
 # Necessary package
@@ -56,23 +57,27 @@ RUN cp -rf cubrid-testtools/CTP ./
 
 WORKDIR /home/ctp/ctp_config
 
-CMD ["sh","./ctp_env_export.sh"]
-CMD ["sh","./install_CUBRID.sh"]
+# Set the ctp env
+#CMD ./ctp_env_export.sh
+RUN echo "export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.41.x86_64" >> ${HOME}/.bash_profile
+RUN echo "export CTP_HOME=/home/ctp/CTP" >> ${HOME}/.bash_profile
+#RUN echo ". ${HOME}/.cubrid.sh" >> ${HOME}/.bash_profile
+RUN sed -i 's@:$HOME/bin@:$HOME/bin:$HOME/CTP/bin:$HOME/CTP/common/script@' ${HOME}/.bash_profile
+
+#CMD ./install_CUBRID.sh
+#CMD ["/bin/bash","-c","./ctp_env_export.sh"]
+#CMD ["/bin/bash","-c","./install_CUBRID.sh"]
 #CMD /bin/sh -c ctp_env_export.sh
 #CMD /bin/sh -c install_CUBRID.sh
 
-#RUN cp -f sql.conf /home/ctp/CTP/conf
 
-#COPY sql.conf /home/ctp/CTP/conf
-CMD ["cp","-f","sql.conf","/home/ctp/CTP/conf"]
+# copy to ctp config
+ADD ctp_config/sql.conf /home/ctp/CTP/conf/
+ADD ctp_config/medium.conf /home/ctp/CTP/conf/
+ADD ctp_config/ha_repl.conf /home/ctp/CTP/conf/
 
-#RUN /bin/sh -c sh ctp_env_export.sh
+
 #RUN /bin/sh -c sh install_CUBRID.sh
-
-#RUN echo "export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.41.x86_64/jre" >> /home/ctp/.bash_profile
-#RUN echo "export CTP_HOME=/home/ctp/CTP" >> /home/ctp/.bash_profile
-#RUN sed -i 's@:$HOME/bin@:$HOME/bin:$HOME/CTP/bin:$HOME/CTP/common/script@' /home/ctp/.bash_profile
-#RUN . /home/ctp/.bash_profile
 
 #ENTRYPOINT ctp_entrypoint.sh
 
@@ -83,6 +88,16 @@ WORKDIR /home/ha_repl_01
 
 RUN git clone https://github.com/CUBRID/cubrid-testtools
 RUN cp -rf cubrid-testtools/CTP ./
+
+WORKDIR /home/ha_repl_01/ctp_config
+
+# set the ctp env
+#CMD ./ctp_env_export.sh
+RUN echo "export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.41.x86_64" >> ${HOME}/.bash_profile
+RUN echo "export CTP_HOME=/home/ctp/CTP" >> ${HOME}/.bash_profile
+#RUN echo ". ${HOME}/.cubrid.sh" >> ${HOME}/.bash_profile
+RUN sed -i 's@:$HOME/bin@:$HOME/bin:$HOME/CTP/bin:$HOME/CTP/common/script@' ${HOME}/.bash_profile
+
  
-USER ctp
-WORKDIR /home/ctp
+USER root
+

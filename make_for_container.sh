@@ -1,7 +1,7 @@
 # !/bin/bash
 
 dir=`pwd`
-VERSION=0.1
+VERSION=0.5
 IMAGE_NAME=ctp_container
 CONTAINER_NAME=docker_for_ctp
 
@@ -31,3 +31,7 @@ docker run --privileged -dit --net br1 --ip 172.200.1.2 -v ${dir}/ctp_config:/ho
 
 docker run --privileged -dit --net br1 --ip 172.200.1.3 -v ${dir}/ctp_config:/home/ctp/ctp_config --name ${CONTAINER_NAME}_02 --hostname ${CONTAINER_NAME}_02 ${IMAGE_NAME}:${VERSION} /bin/bash
 
+sleep 3;
+
+docker exec ${CONTAINER_NAME}_01 service sshd restart
+docker exec ${CONTAINER_NAME}_02 service sshd restart
