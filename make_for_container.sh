@@ -35,3 +35,22 @@ sleep 3;
 
 docker exec ${CONTAINER_NAME}_01 service sshd restart
 docker exec ${CONTAINER_NAME}_02 service sshd restart
+
+sleep 3;
+docker exec ${CONTAINER_NAME}_01 chown -R ctp:ctp /home/ctp/CTP/conf/
+
+sleep 3;
+docker exec ${CONTAINER_NAME}_01 chown -R ctp:ctp /home/ctp/ctp_config
+
+sleep 3;
+docker exec ${CONTAINER_NAME}_01 chown -R ha_repl_01:ha_repl_01 /home/ha_repl_01/ctp_config
+
+sleep 3;
+docker exec ${CONTAINER_NAME}_02 chown -R ctp:ctp /home/ctp/CTP/conf/
+
+sleep 3;
+docker exec ${CONTAINER_NAME}_02 chown -R ctp:ctp /home/ctp/ctp_config
+
+sleep 3;
+docker exec ${CONTAINER_NAME}_02 chown -R ha_repl_01:ha_repl_01 /home/ha_repl_01/ctp_config
+
