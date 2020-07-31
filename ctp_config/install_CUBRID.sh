@@ -17,3 +17,4 @@ sleep 3;
 rm -rf $buildFile
 
 . ${HOME}/.cubrid.sh
+echo ". ${HOME}/.cubrid.sh" >> ${HOME}/.bash_profile
