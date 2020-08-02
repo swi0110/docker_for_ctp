@@ -22,7 +22,7 @@ EXPOSE 22
 
 # Necessary package
 RUN yum install -y net-tools sudo
-RUN yum install -y git wget tar java-1.6.0-openjdk.x86_64 java-1.6.0-openjdk-devel.x86_64
+RUN yum install -y git wget tar java-1.6.0-openjdk.x86_64 java-1.6.0-openjdk-devel.x86_64 dos2unix
 RUN yum install -y gcc-4.4.7 gcc-c++ libtool-2.2.6
 
 RUN echo 'root:1234' | chpasswd
@@ -60,7 +60,7 @@ WORKDIR /home/ctp/ctp_config
 # Set the ctp env
 #CMD ./ctp_env_export.sh
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.41.x86_64" >> ${HOME}/.bash_profile
-RUN echo "export CTP_HOME=/home/ctp/CTP" >> ${HOME}/.bash_profile
+RUN echo "export CTP_HOME=${HOME}/CTP" >> ${HOME}/.bash_profile
 #RUN echo ". ${HOME}/.cubrid.sh" >> ${HOME}/.bash_profile
 RUN sed -i 's@:$HOME/bin@:$HOME/bin:$HOME/CTP/bin:$HOME/CTP/common/script@' ${HOME}/.bash_profile
 
@@ -72,13 +72,9 @@ RUN sed -i 's@:$HOME/bin@:$HOME/bin:$HOME/CTP/bin:$HOME/CTP/common/script@' ${HO
 
 
 # copy to ctp config
-ADD ctp_config/sql.conf /home/ctp/CTP/conf/
-ADD ctp_config/medium.conf /home/ctp/CTP/conf/
-ADD ctp_config/ha_repl.conf /home/ctp/CTP/conf/
-
+ADD ctp_config/*.conf /home/ctp/CTP/conf/
 
 #RUN /bin/sh -c sh install_CUBRID.sh
-
 #ENTRYPOINT ctp_entrypoint.sh
 
 
@@ -94,7 +90,7 @@ WORKDIR /home/ha_repl_01/ctp_config
 # set the ctp env
 #CMD ./ctp_env_export.sh
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.41.x86_64" >> ${HOME}/.bash_profile
-RUN echo "export CTP_HOME=/home/ctp/CTP" >> ${HOME}/.bash_profile
+RUN echo "export CTP_HOME=${HOME}/CTP" >> ${HOME}/.bash_profile
 #RUN echo ". ${HOME}/.cubrid.sh" >> ${HOME}/.bash_profile
 RUN sed -i 's@:$HOME/bin@:$HOME/bin:$HOME/CTP/bin:$HOME/CTP/common/script@' ${HOME}/.bash_profile
 
