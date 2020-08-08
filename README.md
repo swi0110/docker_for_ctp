@@ -5,9 +5,9 @@ You can execute the CTP in docker.
 All users password was 1234.<br/>
 | Container name | ip | User | Role | Tools |
 | ------------ | ------------ | ------------ | ------------ | ------------ |
-| docker_for_ctp_01 | 172.200.1.2 | ctp | Controller & SQL, SQL_BY_CCI, MEDIUM, JDBC unit test | CTP, cubrid-testcases |
+| docker_for_ctp_01 | 172.200.1.2 | ctp | Controller & SQL, SQL_BY_CCI, <br/>MEDIUM, JDBC unit test | CTP, cubrid-testcases |
 |  |  | ha_repl_01 | HA_REPL(Master), SHELL test | CTP |
-| docker_for_ctp_02 | 172.200.1.3 | ctp | Controller & SQL, SQL_BY_CCI, MEDIUM, JDBC unit test | CTP, cubrid-testcases |
+| docker_for_ctp_02 | 172.200.1.3 | ctp | Controller & SQL, SQL_BY_CCI, <br/>MEDIUM, JDBC unit test | CTP, cubrid-testcases |
 |  |  | ha_repl_01 | HA_REPL(Slave), SHELL test | CTP |
 
 <br/><br/>
