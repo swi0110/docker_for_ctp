@@ -7,8 +7,8 @@ CONTAINER_NAME=docker_for_ctp
 
 # Remove the previous container & image
 IMAGE_ID=`docker images | grep "${IMAGE_NAME}" | awk '{print $3}'`
-docker rm -f ${CONTAINER_NAME}_01
-docker rm -f ${CONTAINER_NAME}_02
+docker rm ${CONTAINER_NAME}_01
+docker rm ${CONTAINER_NAME}_02
 sleep 5;
 docker rmi ${IMAGE_ID}
 sleep 5;
