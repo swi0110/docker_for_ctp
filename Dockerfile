@@ -20,7 +20,7 @@ RUN     sed -i \
 CMD service sshd restart
 EXPOSE 22
 
-# Necessary package
+# Need package
 RUN yum install -y net-tools sudo
 RUN yum install -y git wget tar java-1.6.0-openjdk.x86_64 java-1.6.0-openjdk-devel.x86_64 dos2unix
 RUN yum install -y gcc-4.4.7 gcc-c++ libtool-2.2.6
@@ -91,6 +91,7 @@ WORKDIR /home/ha_repl_01/ctp_config
 #CMD ./ctp_env_export.sh
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.41.x86_64" >> ${HOME}/.bash_profile
 RUN echo "export CTP_HOME=${HOME}/CTP" >> ${HOME}/.bash_profile
+RUN echo "export init_path=$HOME/CTP/shell/init_path" >> ${HOME}/.bash_profile
 #RUN echo ". ${HOME}/.cubrid.sh" >> ${HOME}/.bash_profile
 RUN sed -i 's@:$HOME/bin@:$HOME/bin:$HOME/CTP/bin:$HOME/CTP/common/script@' ${HOME}/.bash_profile
 

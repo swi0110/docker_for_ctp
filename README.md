@@ -1,4 +1,6 @@
 # **Docker for CTP**
+ctp.sh [Test scenario] -c [CTP/conf/*.conf]
+
 You can execute the CTP in docker.
 
 ### Container construct
@@ -27,6 +29,9 @@ The normal way is please refer to the CUBRID manual.<br/>
 https://www.cubrid.org/manual/en/10.2/install.html#installing-and-running-cubrid-on-linux <br/><br/>
 
 ### How to execute the ctp test?
+ctp.sh [Test scenario] -c [CTP/conf/*.conf]
+(ex : ctp.sh sql -c ~/CTP/conf/sql.conf )
+
 If you want to change the 'test scenario path', open the 'CTP/conf/*.conf'.<br/>
 and change the 'scenario' variable.<br/><br/>
 
