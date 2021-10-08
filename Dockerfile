@@ -1,5 +1,5 @@
-#FROM centos:centos7.5.1804
-FROM centos:centos6.9
+FROM centos:7
+#FROM centos:centos6.9
 
 # It is not important
 #RUN yum update -y
@@ -58,24 +58,12 @@ RUN cp -rf cubrid-testtools/CTP ./
 WORKDIR /home/ctp/ctp_config
 
 # Set the ctp env
-#CMD ./ctp_env_export.sh
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.41.x86_64" >> ${HOME}/.bash_profile
 RUN echo "export CTP_HOME=${HOME}/CTP" >> ${HOME}/.bash_profile
-#RUN echo ". ${HOME}/.cubrid.sh" >> ${HOME}/.bash_profile
 RUN sed -i 's@:$HOME/bin@:$HOME/bin:$HOME/CTP/bin:$HOME/CTP/common/script@' ${HOME}/.bash_profile
-
-#CMD ./install_CUBRID.sh
-#CMD ["/bin/bash","-c","./ctp_env_export.sh"]
-#CMD ["/bin/bash","-c","./install_CUBRID.sh"]
-#CMD /bin/sh -c ctp_env_export.sh
-#CMD /bin/sh -c install_CUBRID.sh
-
 
 # copy to ctp config
 ADD ctp_config/*.conf /home/ctp/CTP/conf/
-
-#RUN /bin/sh -c sh install_CUBRID.sh
-#ENTRYPOINT ctp_entrypoint.sh
 
 
 USER ha_repl_01
@@ -88,11 +76,9 @@ RUN cp -rf cubrid-testtools/CTP ./
 WORKDIR /home/ha_repl_01/ctp_config
 
 # set the ctp env
-#CMD ./ctp_env_export.sh
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.41.x86_64" >> ${HOME}/.bash_profile
 RUN echo "export CTP_HOME=${HOME}/CTP" >> ${HOME}/.bash_profile
 RUN echo "export init_path=$HOME/CTP/shell/init_path" >> ${HOME}/.bash_profile
-#RUN echo ". ${HOME}/.cubrid.sh" >> ${HOME}/.bash_profile
 RUN sed -i 's@:$HOME/bin@:$HOME/bin:$HOME/CTP/bin:$HOME/CTP/common/script@' ${HOME}/.bash_profile
 
  
