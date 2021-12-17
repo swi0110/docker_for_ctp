@@ -21,11 +21,7 @@ CMD service sshd restart
 EXPOSE 22
 
 # Need package
-<<<<<<< HEAD
-RUN yum install -y net-tools sudo
-=======
 RUN yum install -y net-tools sudo gdb
->>>>>>> develop
 RUN yum install -y git wget tar java-1.6.0-openjdk.x86_64 java-1.6.0-openjdk-devel.x86_64 dos2unix
 RUN yum install -y gcc-4.4.7 gcc-c++ libtool-2.2.6
 
