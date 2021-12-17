@@ -1,7 +1,7 @@
 # !/bin/bash
 
 dir=`pwd`
-VERSION=0.7
+VERSION=0.8
 IMAGE_NAME=ctp_container
 CONTAINER_NAME=docker_for_ctp
 
@@ -25,8 +25,8 @@ docker network create --driver bridge br1 --ip-range=${ip_range}/24 --subnet=${i
 
 #centos 7
 # docker run --privileged -dit --net br1 --ip 172.200.1.2 -v /root/docker_for_ctp/ctp_config:/home/ctp/ctp_config --name docker_for_ctp --hostname docker_for_ctp_01 ctp_container:0.1 /sbin/init
-docker run --privileged -dit --net br1 --ip ${ip_list[0]} -v ${dir}/ctp_config:/home/ctp/ctp_config --name ${CONTAINER_NAME}_01 --hostname ${CONTAINER_NAME}_01 ${IMAGE_NAME}:${VERSION} /sbin/init
-docker run --privileged -dit --net br1 --ip ${ip_list[1]} -v ${dir}/ctp_config:/home/ctp/ctp_config --name ${CONTAINER_NAME}_02 --hostname ${CONTAINER_NAME}_02 ${IMAGE_NAME}:${VERSION} /sbin/init
+docker run --privileged -dit --cap-add=SYS_PTRACE --net br1 --ip ${ip_list[0]} -v ${dir}/ctp_config:/home/ctp/ctp_config --name ${CONTAINER_NAME}_01 --hostname ${CONTAINER_NAME}_01 ${IMAGE_NAME}:${VERSION} /sbin/init
+docker run --privileged -dit --cap-add=SYS_PTRACE --net br1 --ip ${ip_list[1]} -v ${dir}/ctp_config:/home/ctp/ctp_config --name ${CONTAINER_NAME}_02 --hostname ${CONTAINER_NAME}_02 ${IMAGE_NAME}:${VERSION} /sbin/init
 
 #centos 6
 #docker run --privileged -dit --net br1 --ip ${ip_list[0]} -v ${dir}/ctp_config:/home/ctp/ctp_config --name ${CONTAINER_NAME}_01 --hostname ${CONTAINER_NAME}_01 ${IMAGE_NAME}:${VERSION} /bin/bash
@@ -38,8 +38,8 @@ sed -i 's/SLAVE_SERVER_IP =.*/SLAVE_SERVER_IP = ${ip_list[1]}/' ctp_config/HA.pr
 
 sleep 3;
 
-docker exec ${CONTAINER_NAME}_01 service sshd restart
-docker exec ${CONTAINER_NAME}_02 service sshd restart
+docker exec ${CONTAINER_NAME}_01 systemctl restart sshd
+docker exec ${CONTAINER_NAME}_02 systemctl restart sshd
 
 sleep 3;
 docker exec ${CONTAINER_NAME}_01 chown -R ctp:ctp /home/ctp/CTP/conf/
