@@ -1,15 +1,18 @@
 # **Docker for CTP**
+ctp.sh [Test scenario] -c [CTP/conf/*.conf]
+
 You can execute the CTP in docker.
 
 ### Container construct
+All users password was 1234.<br/>
 | Container name | ip | User | Role | Tools |
 | ------------ | ------------ | ------------ | ------------ | ------------ |
-| docker_for_ctp_01 | 172.200.1.2 | ctp | Controller & SQL, MEDIUM test | CTP, cubrid-testcases |
-|  |  | ha_repl_01 | ha_repl test only (Master) | CTP |
-| docker_for_ctp_02 | 172.200.1.3 | ctp | Controller & SQL, MEDIUM test | CTP, cubrid-testcases |
-|  |  | ha_repl_01 | ha_repl test only (Slave) | CTP |
+| docker_for_ctp_01 | 172.200.1.2 | ctp | Controller & SQL, SQL_BY_CCI, <br/>MEDIUM, JDBC unit test | CTP, cubrid-testcases |
+|  |  | ha_repl_01 | HA_REPL(Master), HA_SHELL(Master), SHELL test | CTP |
+| docker_for_ctp_02 | 172.200.1.3 | ctp | Controller & SQL, SQL_BY_CCI, <br/>MEDIUM, JDBC unit test | CTP, cubrid-testcases |
+|  |  | ha_repl_01 | HA_REPL(Slave), HA_SHELL(Slave), SHELL test | CTP |
 
-<br/><br/><br/>
+<br/><br/>
 
 ### How to create the container?
 Execute the 'make_for_container.sh'.<br/>
@@ -26,6 +29,9 @@ The normal way is please refer to the CUBRID manual.<br/>
 https://www.cubrid.org/manual/en/10.2/install.html#installing-and-running-cubrid-on-linux <br/><br/>
 
 ### How to execute the ctp test?
+ctp.sh [Test scenario] -c [CTP/conf/*.conf]
+(ex : ctp.sh sql -c ~/CTP/conf/sql.conf )
+
 If you want to change the 'test scenario path', open the 'CTP/conf/*.conf'.<br/>
 and change the 'scenario' variable.<br/><br/>
 

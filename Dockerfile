@@ -1,5 +1,5 @@
-#FROM centos:centos7.5.1804
-FROM centos:centos6.9
+FROM centos:7
+#FROM centos:centos6.9
 
 # It is not important
 #RUN yum update -y
@@ -20,9 +20,9 @@ RUN     sed -i \
 CMD service sshd restart
 EXPOSE 22
 
-# Necessary package
+# Need package
 RUN yum install -y net-tools sudo
-RUN yum install -y git wget tar java-1.6.0-openjdk.x86_64 java-1.6.0-openjdk-devel.x86_64
+RUN yum install -y git wget tar java-1.6.0-openjdk.x86_64 java-1.6.0-openjdk-devel.x86_64 dos2unix
 RUN yum install -y gcc-4.4.7 gcc-c++ libtool-2.2.6
 
 RUN echo 'root:1234' | chpasswd
@@ -58,28 +58,12 @@ RUN cp -rf cubrid-testtools/CTP ./
 WORKDIR /home/ctp/ctp_config
 
 # Set the ctp env
-#CMD ./ctp_env_export.sh
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.41.x86_64" >> ${HOME}/.bash_profile
-RUN echo "export CTP_HOME=/home/ctp/CTP" >> ${HOME}/.bash_profile
-#RUN echo ". ${HOME}/.cubrid.sh" >> ${HOME}/.bash_profile
+RUN echo "export CTP_HOME=${HOME}/CTP" >> ${HOME}/.bash_profile
 RUN sed -i 's@:$HOME/bin@:$HOME/bin:$HOME/CTP/bin:$HOME/CTP/common/script@' ${HOME}/.bash_profile
 
-#CMD ./install_CUBRID.sh
-#CMD ["/bin/bash","-c","./ctp_env_export.sh"]
-#CMD ["/bin/bash","-c","./install_CUBRID.sh"]
-#CMD /bin/sh -c ctp_env_export.sh
-#CMD /bin/sh -c install_CUBRID.sh
-
-
 # copy to ctp config
-ADD ctp_config/sql.conf /home/ctp/CTP/conf/
-ADD ctp_config/medium.conf /home/ctp/CTP/conf/
-ADD ctp_config/ha_repl.conf /home/ctp/CTP/conf/
-
-
-#RUN /bin/sh -c sh install_CUBRID.sh
-
-#ENTRYPOINT ctp_entrypoint.sh
+ADD ctp_config/*.conf /home/ctp/CTP/conf/
 
 
 USER ha_repl_01
@@ -92,10 +76,9 @@ RUN cp -rf cubrid-testtools/CTP ./
 WORKDIR /home/ha_repl_01/ctp_config
 
 # set the ctp env
-#CMD ./ctp_env_export.sh
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.41.x86_64" >> ${HOME}/.bash_profile
-RUN echo "export CTP_HOME=/home/ctp/CTP" >> ${HOME}/.bash_profile
-#RUN echo ". ${HOME}/.cubrid.sh" >> ${HOME}/.bash_profile
+RUN echo "export CTP_HOME=${HOME}/CTP" >> ${HOME}/.bash_profile
+RUN echo "export init_path=$HOME/CTP/shell/init_path" >> ${HOME}/.bash_profile
 RUN sed -i 's@:$HOME/bin@:$HOME/bin:$HOME/CTP/bin:$HOME/CTP/common/script@' ${HOME}/.bash_profile
 
  
